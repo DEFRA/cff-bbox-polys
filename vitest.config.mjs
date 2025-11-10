@@ -1,6 +1,10 @@
+
 import { defineConfig, configDefaults } from 'vitest/config'
 
 export default defineConfig({
+  resolve: {
+    extensions: ['.mjs', '.js', '.json'] // ✅ Add this
+  },
   test: {
     globals: true,
     environment: 'node',
@@ -20,3 +24,4 @@ export default defineConfig({
     }
   }
 })
+

@@ -1,4 +1,21 @@
+
+# Ignore build artifacts and generated files
+public
 .public
-package-lock.json
-node_modules
 coverage
+node_modules
+package-lock.json
+
+# Ignore minified JS and manifest files
+public/**/*.min.js
+.public/**/*.min.js
+public/**/*manifest.json
+.public/**/*manifest.json
+
+# Specific files
+sonarlint/connectedMode.json
+nodemon.json
+
+# Tests and docs
+__tests__/utils.test.js
+README.md

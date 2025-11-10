@@ -3,7 +3,7 @@ import hapi from '@hapi/hapi'
 import Scooter from '@hapi/scooter'
 
 import { router } from './router.js'
-import { config } from '../config/config.js'
+import { config } from '../config/config'
 import { pulse } from './common/helpers/pulse.js'
 import { catchAll } from './common/helpers/errors.js'
 import { nunjucksConfig } from '../config/nunjucks/nunjucks.js'

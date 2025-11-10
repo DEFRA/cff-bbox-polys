@@ -10,3 +10,5 @@ coverage
 .envrc
 tsconfig.tsbuildinfo
 .env
+public/govuk/govuk-frontend.min.js
+public/js/*.min.js

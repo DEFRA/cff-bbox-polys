@@ -21,7 +21,7 @@ export default {
   context: path.resolve(dirname, 'src/client'),
   entry: {
     application: {
-      import: ['./javascripts/application.js', './stylesheets/application.scss']
+      import: ['./javascripts/application.mjs', './stylesheets/application.scss']
     }
   },
   experiments: {

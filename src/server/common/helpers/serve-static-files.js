@@ -1,4 +1,4 @@
-import { config } from '../../../config/config.js'
+import { config } from '../../../config/config'
 import { statusCodes } from '../constants/status-codes.js'
 
 export const serveStaticFiles = {
