@@ -14,7 +14,11 @@ vi.mock('ioredis', () => ({
 describe('#buildRedisClient', () => {
   describe('When Redis Single InstanceCache is requested', () => {
     beforeEach(() => {
-      buildRedisClient(config.get('redis'))
+      buildRedisClient({
+        ...config.get('redis'),
+        host: '127.0.0.1',
+        useSingleInstanceCache: true
+      })
     })
 
     test('Should instantiate a single Redis client', () => {
@@ -31,6 +35,7 @@ describe('#buildRedisClient', () => {
     beforeEach(() => {
       buildRedisClient({
         ...config.get('redis'),
+        host: '127.0.0.1',
         useSingleInstanceCache: false,
         useTLS: true,
         username: 'user',

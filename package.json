@@ -1,9 +1,9 @@
 {
-  "name": "cdp-node-frontend-template",
-  "version": "0.15.0",
-  "description": "CDP Frontend Template",
+  "name": "node-bing-map-app",
+  "version": "1.0.0",
+  "description": "Bing Maps bounding box and polygon intersection checker",
   "sideEffects": false,
-  "main": "src/index.js",
+  "main": "server.js",
   "type": "module",
   "engines": {
     "node": ">=22.16.0"
@@ -52,6 +52,7 @@
     "cssnano": "7.0.7",
     "cssnano-preset-default": "7.0.7",
     "date-fns": "4.1.0",
+    "dotenv": "17.2.3",
     "global-agent": "3.0.0",
     "govuk-frontend": "5.11.0",
     "hapi-pino": "12.1.0",

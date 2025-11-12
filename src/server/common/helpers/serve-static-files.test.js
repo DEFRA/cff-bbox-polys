@@ -4,13 +4,21 @@ import { statusCodes } from '../constants/status-codes.js'
 describe('#serveStaticFiles', () => {
   let server
 
+  // Helper to get a random port
+  function getRandomPort() {
+    return Math.floor(Math.random() * (65535 - 1025) + 1025)
+  }
+
   describe('When secure context is disabled', () => {
     beforeEach(async () => {
-      server = await startServer()
+      const port = getRandomPort()
+      server = await startServer({ port })
     })
 
     afterEach(async () => {
-      await server.stop({ timeout: 0 })
+      if (server && server.stop) {
+        await server.stop({ timeout: 0 })
+      }
     })
 
     test('Should serve favicon as expected', async () => {
