@@ -1,8 +1,11 @@
-'use strict'
+import 'dotenv/config'
+import Hapi from '@hapi/hapi'
+import Path, { dirname } from 'path'
+import { fileURLToPath } from 'url'
+import Inert from '@hapi/inert'
 
-require('dotenv').config()
-const Hapi = require('@hapi/hapi')
-const Path = require('path')
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 // Change the import path to point to public/js/utils.js
 // ...existing code...
 
@@ -18,7 +21,7 @@ const init = async () => {
   })
 
   // Register inert for static file handling
-  await server.register(require('@hapi/inert'))
+  await server.register(Inert)
 
   // Serve static files from /public
   server.route({
