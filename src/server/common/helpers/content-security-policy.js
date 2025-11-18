@@ -7,18 +7,21 @@ import Blankie from 'blankie'
 const contentSecurityPolicy = {
   plugin: Blankie,
   options: {
-    // Hash 'sha256-GUQ5ad8JK5KmEWmROf3LZd9ge94daqNvd8xy9YS1iDw=' is to support a GOV.UK frontend script bundled within Nunjucks macros
-    // https://frontend.design-system.service.gov.uk/import-javascript/#if-our-inline-javascript-snippet-is-blocked-by-a-content-security-policy
+    // Note: Removed SHA hash to allow 'unsafe-inline' for Bing Maps integration
     defaultSrc: ['self'],
-    fontSrc: ['self', 'data:'],
-    connectSrc: ['self', 'wss', 'data:'],
+    fontSrc: ['self', 'data:', 'blob:'],
+    connectSrc: ['self', 'wss', 'data:', 'blob:', 'https:', 'http:'],
     mediaSrc: ['self'],
-    styleSrc: ['self'],
+    styleSrc: ['self', "'unsafe-inline'", 'https:', 'blob:', 'data:'],
     scriptSrc: [
       'self',
-      "'sha256-GUQ5ad8JK5KmEWmROf3LZd9ge94daqNvd8xy9YS1iDw='"
+      "'unsafe-inline'",
+      "'unsafe-eval'",
+      'https:',
+      'blob:',
+      'data:'
     ],
-    imgSrc: ['self', 'data:'],
+    imgSrc: ['self', 'data:', 'blob:', 'https:', 'http:'],
     frameSrc: ['self', 'data:'],
     objectSrc: ['none'],
     frameAncestors: ['none'],
