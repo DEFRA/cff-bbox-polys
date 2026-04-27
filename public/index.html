@@ -109,6 +109,11 @@
               Location</button>
           </div>
           <div class="govuk-form-group">
+            <label class="govuk-label" for="bingResponse">Bing response for searched location:</label>
+            <textarea class="govuk-textarea" id='bingResponse' rows="10" readonly
+              placeholder='Bing response will appear here after a successful search.'></textarea>
+          </div>
+          <div class="govuk-form-group">
             <label class="govuk-label">Bounding Box Array [minLng, minLat, maxLng, maxLat]:</label>
             <textarea class="govuk-textarea" id='bbox'></textarea>
           </div>
@@ -172,8 +177,10 @@
     initAll()
   </script>
   
-  <script>
+  <script type="module">
     /* Inline JavaScript from app.js */
+    import { setBingResponseOnElement } from '/src/client/javascripts/bing-response.js'
+
     let map, bboxShape, polygonShape;
 
     function isResultInEngland(res) {
@@ -240,6 +247,11 @@
         container.innerHTML = '';
     }
 
+    function setBingResponse(payload) {
+      const responseBox = document.getElementById('bingResponse');
+      setBingResponseOnElement(responseBox, payload);
+    }
+
     async function loadMapScenario() {
         const response = await fetch('/config');
         const config = await response.json();
@@ -275,12 +287,15 @@
                 if (result && result.results && result.results.length > 0) {
                     const top = result.results[0];
                     if (!isResultInEngland(top)) {
+                  setBingResponse(result);
                         renderGovukError('Location is outside England. Please search for a location within England.', 'locationSearch');
                         return;
                     }
 
                     const loc = top.location;
                     const bbox = top.bestView;
+
+                setBingResponse(result);
 
                     const bboxArray = [
                         bbox.center.longitude - bbox.width / 2,
@@ -292,10 +307,12 @@
                     clearGovukError();
                     drawShapes();
                 } else {
+                    setBingResponse(result);
                     renderGovukError("Location not found.", 'locationSearch');
                 }
             },
             errorCallback: function () {
+                  setBingResponse({ error: 'Search failed.' });
                 renderGovukError("Search failed.", 'locationSearch');
             }
         });
@@ -327,10 +344,13 @@
                         location: new Microsoft.Maps.Location(lat, lng),
                         callback: function (res) {
                             if (!isResultInEngland(res)) {
+                            setBingResponse(res);
                                 renderGovukError('Your current location appears to be outside England. The app only accepts locations in England.');
                                 drawShapes();
                                 return;
                             }
+
+                          setBingResponse(res);
 
                             if (res && res.name) {
                                 const input = document.getElementById('locationSearch');
@@ -343,10 +363,12 @@
                             drawShapes();
                         },
                         errorCallback: function () {
+                            setBingResponse({ error: 'Reverse geocode failed.' });
                             drawShapes();
                         }
                     });
                 } catch (e) {
+                        setBingResponse({ error: 'Reverse geocode unavailable.' });
                     drawShapes();
                 }
             }, function() {
