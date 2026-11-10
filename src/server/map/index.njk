@@ -40,6 +40,20 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
+      <div class="govuk-form-group">
+        <label class="govuk-label govuk-label--s" for="map-style">Base map style</label>
+        <select class="govuk-select" id="map-style" name="map-style">
+          <option value="road" selected>Road</option>
+          <option value="road_shaded_relief">Road (shaded relief)</option>
+          <option value="satellite">Satellite</option>
+          <option value="satellite_road_labels">Satellite with road labels</option>
+          <option value="grayscale_light">Grayscale light</option>
+          <option value="grayscale_dark">Grayscale dark</option>
+          <option value="night">Night</option>
+          <option value="high_contrast_light">High contrast light</option>
+          <option value="high_contrast_dark">High contrast dark</option>
+        </select>
+      </div>
       <div id="azure-map" style="width: 100%; height: 600px;"></div>
     </div>
   </div>
@@ -105,6 +119,10 @@
           authType: 'subscriptionKey',
           subscriptionKey: '{{ azureMapsKey }}'
         }
+      })
+
+      document.getElementById('map-style').addEventListener('change', function () {
+        map.setStyle({ style: this.value })
       })
 
       map.events.add('ready', function () {
